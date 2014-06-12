@@ -1,0 +1,101 @@
+# This is a dummy data file, which illustrates the input format required
+# by covld.py.  Each row is a two-locus diploid genotype coded as
+# follows.  At each locus, choose an allele at random, and then count
+# the number of copies of that allele in each genotype.  For example,
+# if we were counting Ts, then genotypes AA, AT, and TT, would become
+# 0, 1, and 2.  The data file consists of two columns delimited by
+# whitespace.  Each column is a series of 0/1/2 values, which
+# represent the genotypes at that locus in the individuals in the
+# sample.
+#
+# Here are some data from two linked HapMap loci
+0  2
+0  2
+0  2
+1  1
+0  1
+1  1
+1  1
+1  0
+0  1
+0  1
+0  1
+0  2
+0  1
+1  1
+2  0
+0  1
+1  0
+0  1
+0  2
+0  0
+1  0
+0  1
+0  1
+0  2
+1  1
+0  2
+0  1
+0  0
+0  0
+0  2
+2  0
+1  1
+0  1
+0  2
+1  1
+1  1
+1  1
+1  0
+1  0
+0  0
+1  0
+0  2
+0  2
+0  1
+0  1
+0  1
+0  0
+0  1
+1  1
+0  2
+0  0
+1  1
+0  0
+0  2
+0  1
+1  0
+0  0
+1  1
+1  0
+0  1
+0  1
+0  2
+1  1
+0  2
+0  2
+0  2
+0  1
+0  2
+1  0
+0  1
+0  1
+1  1
+0  1
+0  1
+0  1
+0  1
+0  1
+1  0
+1  1
+0  2
+1  0
+1  1
+0  1
+1  0
+0  2
+0  1
+0  2
+0  0
+1  0
+0  1
