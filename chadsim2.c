@@ -239,15 +239,15 @@ int main(void) {
     ResTbl *tbl_dst_es = ResTbl_new(0.0, maxkb, "distance",
                                     "rsq_ES"); 
     ResTbl *tbl_dst_rh_nocnv = ResTbl_new(0.0, maxkb,
-										  "distance", "rsq_RH_nocnv");
-	ResTbl *tbl_dst_avrsq = ResTbl_new(0.0, maxkb, "distance", "RHEMavrsq");
-	ResTbl *tbl_dst_avr = ResTbl_new(0.0, maxkb, "distance", "RHEMavr");
+                                          "distance", "rsq_RH_nocnv");
+    ResTbl *tbl_dst_avrsq = ResTbl_new(0.0, maxkb, "distance", "RHEMavrsq");
+    ResTbl *tbl_dst_avr = ResTbl_new(0.0, maxkb, "distance", "RHEMavr");
     ResTbl *tbl_Dp_rh = ResTbl_new(-1.0, 1.0, "Dp", "rsq_RH");
     ResTbl *tbl_Dp_es = ResTbl_new(-1.0, 1.0, "Dp", "rsq_ES");
 
-	t0 = time(NULL);
-	printf("Date and time: %s", ctime(&t0));
-	fflush(stdout);
+    t0 = time(NULL);
+    printf("Date and time: %s", ctime(&t0));
+    fflush(stdout);
 
     gsl_rng_set(rng, (unsigned) t0);
 
@@ -258,10 +258,10 @@ int main(void) {
     for(i=0; i<2*NSUBJ; ++i)
         rndx[i] = i;
     if(SHUFFLE) {
-		printf("Shuffling gametes\n");
-		gsl_ran_shuffle(rng, rndx, 2*NSUBJ, sizeof(rndx[0]));
+        printf("Shuffling gametes\n");
+        gsl_ran_shuffle(rng, rndx, 2*NSUBJ, sizeof(rndx[0]));
     }else 
-		printf("Did NOT shuffle gametes\n");
+        printf("Did NOT shuffle gametes\n");
     
     f = fopen(FNAME, "r");
     if(f==NULL) {
@@ -313,76 +313,76 @@ int main(void) {
 
   
             /* true values */
-			r = get_r_gamete(2*NSUBJ, data[ndx].gamete, data[j].gamete);
-			rsq_true = r*r;
+            r = get_r_gamete(2*NSUBJ, data[ndx].gamete, data[j].gamete);
+            rsq_true = r*r;
             Dp_true = r_to_Dprime(r, data[ndx].p, data[j].p);
-			assert(fabs(Dp_true) <= 1.0001);
+            assert(fabs(Dp_true) <= 1.0001);
 
             /* RH method */
-			r_av = r = get_r_corr(NSUBJ, data[ndx].gtype, data[j].gtype);
-			/*r = get_r_corr_genotype(NSUBJ, data[ndx].gtype,
-			  data[j].gtype);*/
-			rsq_RH = r*r;
+            r_av = r = get_r_corr(NSUBJ, data[ndx].gtype, data[j].gtype);
+            /*r = get_r_corr_genotype(NSUBJ, data[ndx].gtype,
+              data[j].gtype);*/
+            rsq_RH = r*r;
             ResTbl_tabulate(tbl_dst_rh, dist, rsq_RH, rsq_true);
             ResTbl_tabulate(tbl_Dp_rh, Dp_true, rsq_RH, rsq_true);
 
             /* ES method */
-			esem_rval = esem_r(&r, NSUBJ, data[ndx].gtype, data[j].gtype);
-			rsq_ES = r*r;
+            esem_rval = esem_r(&r, NSUBJ, data[ndx].gtype, data[j].gtype);
+            rsq_ES = r*r;
             if( esem_rval ==0) {
                 /* tabulate only if EM converges */
                 ResTbl_tabulate(tbl_dst_es, dist, rsq_ES, rsq_true);
                 ResTbl_tabulate(tbl_Dp_es, Dp_true, rsq_ES, rsq_true);
-				/* Average of rsq and of r */
-				r_av = 0.5*(r + r_av);
-				ResTbl_tabulate(tbl_dst_avrsq, dist, 0.5*(rsq_RH+rsq_ES),
-								rsq_true);
-				ResTbl_tabulate(tbl_dst_avr, dist, r_av*r_av,
-								rsq_true);
+                /* Average of rsq and of r */
+                r_av = 0.5*(r + r_av);
+                ResTbl_tabulate(tbl_dst_avrsq, dist, 0.5*(rsq_RH+rsq_ES),
+                                rsq_true);
+                ResTbl_tabulate(tbl_dst_avr, dist, r_av*r_av,
+                                rsq_true);
             }else
                 ResTbl_tabulate(tbl_dst_rh_nocnv, dist, rsq_RH, rsq_true);
 
 
-			if(verbose) {
-				printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-				printf("dist: %f kb\n", dist);
-				printf("Locus %5d gametes:", data[ndx].pos);
-				for(i=0; i<2*NSUBJ; ++i)
-					printf(" %d", data[ndx].gamete[i]);
-				putchar('\n');
-				printf("Locus %5d gametes:", data[j].pos);
-				for(i=0; i<2*NSUBJ; ++i)
-					printf(" %d", data[j].gamete[i]);
-				putchar('\n');
+            if(verbose) {
+                printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+                printf("dist: %f kb\n", dist);
+                printf("Locus %5d gametes:", data[ndx].pos);
+                for(i=0; i<2*NSUBJ; ++i)
+                    printf(" %d", data[ndx].gamete[i]);
+                putchar('\n');
+                printf("Locus %5d gametes:", data[j].pos);
+                for(i=0; i<2*NSUBJ; ++i)
+                    printf(" %d", data[j].gamete[i]);
+                putchar('\n');
 
-				printf("Locus %5d genotypes:", data[ndx].pos);
-				for(i=0; i<NSUBJ; ++i)
-					printf(" %d", data[ndx].gtype[i]);
-				putchar('\n');
-				printf("Locus %5d genotypes:", data[j].pos);
-				for(i=0; i<NSUBJ; ++i)
-					printf(" %d", data[j].gtype[i]);
-				putchar('\n');
-				printf("Gamete table:\n");
-				print_gamete_table(stdout, 2*NSUBJ, data[ndx].gamete,
-								   data[j].gamete);
-				printf("Genotype table:\n");
-				print_genotype_table(stdout, NSUBJ, data[ndx].gtype,
-									 data[j].gtype);
+                printf("Locus %5d genotypes:", data[ndx].pos);
+                for(i=0; i<NSUBJ; ++i)
+                    printf(" %d", data[ndx].gtype[i]);
+                putchar('\n');
+                printf("Locus %5d genotypes:", data[j].pos);
+                for(i=0; i<NSUBJ; ++i)
+                    printf(" %d", data[j].gtype[i]);
+                putchar('\n');
+                printf("Gamete table:\n");
+                print_gamete_table(stdout, 2*NSUBJ, data[ndx].gamete,
+                                   data[j].gamete);
+                printf("Genotype table:\n");
+                print_genotype_table(stdout, NSUBJ, data[ndx].gtype,
+                                     data[j].gtype);
 
-				if(esem_rval == 0)
-					printf("esem_r converged\n");
-				else
-					printf("esem_r did not converge\n");
-				printf("rsq_true=%f rsq_RH=%f rsq_ES=%f\n",
-					   rsq_true, rsq_RH, rsq_ES);
-				printf("<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-			}
+                if(esem_rval == 0)
+                    printf("esem_r converged\n");
+                else
+                    printf("esem_r did not converge\n");
+                printf("rsq_true=%f rsq_RH=%f rsq_ES=%f\n",
+                       rsq_true, rsq_RH, rsq_ES);
+                printf("<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+            }
         }
 
         /* read another locus */
         while( Locus_init(data+ndx, f, rndx) == BADDAT)
-			;
+            ;
         ++count;
         ndx += 1;
         if (ndx == WINSIZE)

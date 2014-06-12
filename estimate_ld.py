@@ -92,11 +92,11 @@ def get_r_corr_genotype(Y, Z):
     sumx = sumy = sumxx = sumyy = sumxy = 0
     for i in range(3):
         for j in range(3):
-			sumx += count[i][j]*i
-			sumy += count[i][j]*j
-			sumxx += count[i][j]*i*i
-			sumyy += count[i][j]*j*j
-			sumxy += count[i][j]*i*j
+            sumx += count[i][j]*i
+            sumy += count[i][j]*j
+            sumxx += count[i][j]*i*i
+            sumyy += count[i][j]*j*j
+            sumxy += count[i][j]*i*j
 
     print "sumx=%d sumy=%d sumxx=%d sumyy=%d sumxy=%d" \
         % (sumx, sumy, sumxx, sumyy, sumxy)

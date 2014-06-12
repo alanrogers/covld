@@ -94,14 +94,14 @@ void count_genotypes(int x[][3], int len, const int *Y, const int *Z) {
 
     for(i=0; i<len; ++i) {
 #ifndef NDEBUG
-		if(!(Y[i]>=0 && Y[i]<=2))
-			printf("BAD Y[%d]: %d len=%d\n", i, Y[i], len);
-		if(!(Z[i]>=0 && Z[i]<=2))
-			printf("BAD Z[%d]: %d len=%d\n", i, Z[i], len);
-		
+        if(!(Y[i]>=0 && Y[i]<=2))
+            printf("BAD Y[%d]: %d len=%d\n", i, Y[i], len);
+        if(!(Z[i]>=0 && Z[i]<=2))
+            printf("BAD Z[%d]: %d len=%d\n", i, Z[i], len);
+        
 #endif
-		assert(Y[i]>=0 && Y[i]<=2);
-		assert(Z[i]>=0 && Z[i]<=2);
+        assert(Y[i]>=0 && Y[i]<=2);
+        assert(Z[i]>=0 && Z[i]<=2);
         x[Y[i]][Z[i]] += 1;
     }
 }
@@ -117,8 +117,8 @@ void count_gametes(int x[][2], int len, const int *y, const int *z) {
     memset(&(x[0][0]), 0, 4*sizeof(x[0][0]));
 
     for(i=0; i<len; ++i) {
-		assert(y[i]==0 || y[i]==1);
-		assert(z[i]==0 || z[i]==1);
+        assert(y[i]==0 || y[i]==1);
+        assert(z[i]==0 || z[i]==1);
         x[y[i]][z[i]] += 1;
     }
 }
@@ -161,12 +161,12 @@ int esem(int len, const int *Y, const int *Z, double *h, const double tol,
     }
 
 #ifndef NDEBUG
-	if(!__finite(dh)) {
-		printf("NOT FINITE in esem: dh=%g\n", dh);
-		for(i=0; i<3; i++)
-			printf("%4d %4d %4d\n", x[i][0], x[i][1], x[i][2]);
-	}
-#endif	
+    if(!__finite(dh)) {
+        printf("NOT FINITE in esem: dh=%g\n", dh);
+        for(i=0; i<3; i++)
+            printf("%4d %4d %4d\n", x[i][0], x[i][1], x[i][2]);
+    }
+#endif  
 
     if( dh > tol)
         return -1;
@@ -213,20 +213,20 @@ int esem_r(double *result, int len, const int *Y, const int *Z) {
     qB = 1.0 - pB;
     D = h[0]*h[3] - h[1]*h[2];
 
-	denom = pA*qA*pB*qB;
-	if(denom != 0)
-		*result = D/sqrt(denom);
-	else {
-		assert(D == 0);
-		*result = 0.0;
-	}
+    denom = pA*qA*pB*qB;
+    if(denom != 0)
+        *result = D/sqrt(denom);
+    else {
+        assert(D == 0);
+        *result = 0.0;
+    }
 
 #ifndef NDEBUG
-	if(!__finite(*result)) {
-		printf("esem_r returning bad val\n");
-		printf("h=[%g,%g,%g,%g]\n", h[0], h[1], h[2], h[3]);
-	}
-#endif	
+    if(!__finite(*result)) {
+        printf("esem_r returning bad val\n");
+        printf("h=[%g,%g,%g,%g]\n", h[0], h[1], h[2], h[3]);
+    }
+#endif  
 
     return rval;
 }
@@ -254,9 +254,9 @@ double get_r_gamete(int len, int *xdata, int *ydata) {
      * h[3] counts ab
      */
     for(i=0; i < len; ++i) {
-		iy = xdata[i];
-		iz = ydata[i];
-		++h[3 - 2*iy -iz];
+        iy = xdata[i];
+        iz = ydata[i];
+        ++h[3 - 2*iy -iz];
     }
     D = h[0] + h[1] + h[2] + h[3];
     h[0] /= D;
@@ -269,7 +269,7 @@ double get_r_gamete(int len, int *xdata, int *ydata) {
     denom = pA*(1-pA)*pB*(1-pB);
     assert(denom >= 0.0);
     if(denom == 0)
-		return 0.0;
+        return 0.0;
     return D/sqrt(denom);
 }
 
@@ -279,7 +279,7 @@ void print_gamete_table(FILE *f, int len, int *xdata, int *ydata) {
     count_gametes(x, len, xdata, ydata);
     fprintf(f, "%3s: %4d %4d\n", "x\\y", 0, 1);
     for(i=0; i<2; ++i)
-		fprintf(f, "%3i: %4d %4d\n", i, x[i][0], x[i][1]);
+        fprintf(f, "%3i: %4d %4d\n", i, x[i][0], x[i][1]);
     return;
 }
 
@@ -289,7 +289,7 @@ void print_genotype_table(FILE *f, int len, int *xdata, int *ydata) {
     count_genotypes(x, len, xdata, ydata);
     fprintf(f, "%3s: %4d %4d %4d\n", "x\\y", 0, 1, 2);
     for(i=0; i<3; ++i)
-		fprintf(f, "%3i: %4d %4d %4d\n", i, x[i][0], x[i][1], x[i][2]);
+        fprintf(f, "%3i: %4d %4d %4d\n", i, x[i][0], x[i][1], x[i][2]);
     return;
 }
 
@@ -316,21 +316,21 @@ double get_r_corr(int len, int *xdata, int *ydata) {
         sumyy += y*y;
         sumxy += x*y;
     }
-	/* Calculate numerators in integer arithmetic to
-	 * avoid roundoff.
-	 */
-	nsqr = (double) n*(n-1);
-	cov = (n*sumxy - sumx*sumy)/nsqr;
-	vx = (n*sumxx - sumx*sumx)/nsqr;
-	vy = (n*sumyy - sumy*sumy)/nsqr;
+    /* Calculate numerators in integer arithmetic to
+     * avoid roundoff.
+     */
+    nsqr = (double) n*(n-1);
+    cov = (n*sumxy - sumx*sumy)/nsqr;
+    vx = (n*sumxx - sumx*sumx)/nsqr;
+    vy = (n*sumyy - sumy*sumy)/nsqr;
 
-	vxvy = vx*vy;
-	if(vxvy != 0)
-		r = cov/sqrt(vxvy);
-	else {
-		assert(cov == 0);
-		r = 0.0;
-	}
+    vxvy = vx*vy;
+    if(vxvy != 0)
+        r = cov/sqrt(vxvy);
+    else {
+        assert(cov == 0);
+        r = 0.0;
+    }
 
     return r;
 }
@@ -345,19 +345,19 @@ double get_r_corr_genotype(int len, int *xdata, int *ydata) {
     register int i, j;
 
     if(len<2)
-		return 0;
+        return 0;
 
     count_genotypes(count, len, xdata, ydata);
 
     sumx = sumy = sumxx = sumyy = sumxy = 0;
     for(i=0; i<3; ++i) {
-		for(j=0; j<3; ++j) {
-			sumx += count[i][j]*i;
-			sumy += count[i][j]*j;
-			sumxx += count[i][j]*i*i;
-			sumyy += count[i][j]*j*j;
-			sumxy += count[i][j]*i*j;
-		}
+        for(j=0; j<3; ++j) {
+            sumx += count[i][j]*i;
+            sumy += count[i][j]*j;
+            sumxx += count[i][j]*i*i;
+            sumyy += count[i][j]*j*j;
+            sumxy += count[i][j]*i*j;
+        }
     }
     /* Calculate numerators in integer arithmetic to
      * avoid roundoff.
@@ -366,13 +366,13 @@ double get_r_corr_genotype(int len, int *xdata, int *ydata) {
     cov = (len*sumxy - sumx*sumy)/nsqr;
     vx = (len*sumxx - sumx*sumx)/nsqr;
     vy = (len*sumyy - sumy*sumy)/nsqr;
-	vxvy = vx*vy;
-	if(vxvy != 0)
-		r = cov/sqrt(vxvy);
-	else {
-		assert(cov == 0);
-		r = 0.0;
-	}
+    vxvy = vx*vy;
+    if(vxvy != 0)
+        r = cov/sqrt(vxvy);
+    else {
+        assert(cov == 0);
+        r = 0.0;
+    }
 
     return r;
 }
@@ -381,7 +381,7 @@ double get_r_corr_genotype(int len, int *xdata, int *ydata) {
  * Calculate D from r, pA, and pB.
  */
 double r_to_D(double r, double pA, double pB) {
-	return r*sqrt(pA*(1.0-pA)*pB*(1.0-pB));
+    return r*sqrt(pA*(1.0-pA)*pB*(1.0-pB));
 }
         
 /*
@@ -389,7 +389,7 @@ double r_to_D(double r, double pA, double pB) {
  */
 double D_to_Dprime(double D, double pA, double pB) {
     double a;
-	const double qA=1.0-pA, qB=1.0-pB;
+    const double qA=1.0-pA, qB=1.0-pB;
 
     if (D < 0) {
         /*a = fmax(-pA*pB, -qA*qB); */  /* usual definition */
@@ -404,7 +404,7 @@ double D_to_Dprime(double D, double pA, double pB) {
  * Find Dprime from r, pA, and pB.
  */
 double r_to_Dprime(double r, double pA, double pB) {
-	return D_to_Dprime(r_to_D(r, pA, pB), pA, pB);
+    return D_to_Dprime(r_to_D(r, pA, pB), pA, pB);
 }
 
 
@@ -415,15 +415,15 @@ double r_to_Dprime(double r, double pA, double pB) {
 double Dprime_to_D(double Dp, double pA, double pB) {
     const double qA = 1.0 - pA;
     const double qB = 1.0 - pB;
-	double a;
+    double a;
 
     if (Dp < 0) {
 #if 0
-		a = fmax(-pA*pB, -qA*qB);  /* for usual definition of Dp */
+        a = fmax(-pA*pB, -qA*qB);  /* for usual definition of Dp */
 #else
         a = -fmax(-pA*pB, -qA*qB);  /* allow for negative Dp */
 #endif
-	}else
+    }else
         a = fmin(pA*qB, qA*pB);
 
     return Dp*a;

@@ -7,14 +7,14 @@ The software in this directory implements a method for estimating linkage
 disequilibrium, which is described in the following publication.
 
     @Article{Rogers:G-182-839,
-      author = 		 {Rogers, Alan R. and Chad Huff},
-      title = 		 {Linkage Disequilibrium between Loci of Unknown Phase},
-      journal = 	 {Genetics},
-      year = 		 2009,
-      volume = 	 182,
-      number = 	 3,
-      pages = 	 {839--844},
-      month = 	 {July},
+      author =       {Rogers, Alan R. and Chad Huff},
+      title =        {Linkage Disequilibrium between Loci of Unknown Phase},
+      journal =      {Genetics},
+      year =         2009,
+      volume =   182,
+      number =   3,
+      pages =    {839--844},
+      month =    {July},
     }
 
     FILE                 DESCRIPTION
@@ -28,7 +28,7 @@ disequilibrium, which is described in the following publication.
     
     covld.py            Reads a data file and estimates LD using the Rogers-Huff
                         method and (optionally) the Excoffier-Slatkin method.
-    					For usage info, type "python covld.py -h".
+                        For usage info, type "python covld.py -h".
     
     covld-dat.txt       Sample input file for covld.py.  The input format is
                         described in the header of this file.
