@@ -24,7 +24,7 @@
  *
  * Input:
  *
- * hh is a vector of 4 floats, into which results will be put
+ * hh is a vector of 4 doubles, into which results will be put
  *
  * h is a vector of 4 haplotype frequencies, indexed as shown above.
  *
@@ -76,8 +76,10 @@ void esem_step(double *hh, double *h, int x[][3]) {
 
     /* convert gamete counts counts to relative frequencies*/
     n = hh[0]+hh[1]+hh[2]+hh[3];
-    for(i=0; i<4; ++i)
-        hh[i] /= n;
+    hh[0] /= n;
+    hh[1] /= n;
+    hh[2] /= n;
+    hh[3] /= n;
 
     return;
 }
