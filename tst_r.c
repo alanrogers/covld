@@ -61,8 +61,8 @@ void output(int len, const double x[], const double y[], const char *lbl);
  */
 void nonrecombinant_gamete(int yz[2], double pa, double pb, double D,
                            gsl_rng *rng) {
-  int y = gsl_ran_bernoulli(rng, pa);
-  int z = gsl_ran_bernoulli(rng, pb);
+  int y = (int) gsl_ran_bernoulli(rng, pa);
+  int z = (int) gsl_ran_bernoulli(rng, pb);
   if (D > 0.0) {
     if (y==1 && z==0) {
       if (gsl_rng_uniform(rng) < D/(pa*(1.0-pb))) {
@@ -124,8 +124,8 @@ double sim_step(double *r_covld, double *r_em,
       if (mom_recombinant) {
         assert(dad_recombinant);
         /* Generate mom's gamete */
-        yz[0] = gsl_ran_bernoulli(rng, epa);
-        yz[1] = gsl_ran_bernoulli(rng, epb);
+        yz[0] = (int) gsl_ran_bernoulli(rng, epa);
+        yz[1] = (int) gsl_ran_bernoulli(rng, epb);
         y[2*i] = yz[0];
         z[2*i] = yz[1];
         sumy += yz[0];
@@ -133,11 +133,11 @@ double sim_step(double *r_covld, double *r_em,
         /* Generate dad's gamete */
         if (gsl_rng_uniform(rng) >= ef) {
           /* Dad's copy of A/a is independent. */
-          yz[0] = gsl_ran_bernoulli(rng, epa);
+          yz[0] = (int) gsl_ran_bernoulli(rng, epa);
         }
         if (gsl_rng_uniform(rng) >= ef) {
           /* Dad's copy of B/b is independent. */
-          yz[1] = gsl_ran_bernoulli(rng, epb);
+          yz[1] = (int) gsl_ran_bernoulli(rng, epb);
         }
         y[2*i+1] = yz[0];
         z[2*i+1] = yz[1];
@@ -163,14 +163,14 @@ double sim_step(double *r_covld, double *r_em,
            */
           if (gsl_rng_uniform(rng) < ef) {
             /* Mom is IBD with Dad's A/a but not his B/b */
-            yz[1] = gsl_ran_bernoulli(rng, epb);
+            yz[1] = (int) gsl_ran_bernoulli(rng, epb);
           }else if (gsl_rng_uniform(rng) < ef) {
             /* Mom is IBD with Dad's B/b but not his A/a */
-            yz[0] = gsl_ran_bernoulli(rng, epa);
+            yz[0] = (int) gsl_ran_bernoulli(rng, epa);
           }else {
             /* Mom is not IBD with Dad */
-            yz[0] = gsl_ran_bernoulli(rng, epa);
-            yz[1] = gsl_ran_bernoulli(rng, epb);
+            yz[0] = (int) gsl_ran_bernoulli(rng, epa);
+            yz[1] = (int) gsl_ran_bernoulli(rng, epb);
           }
         }else{
           /* Neither gamete is recombinant */
@@ -293,7 +293,7 @@ int main(void) {
   assert(nc <= VECLEN);
 
   /* set seed of rng */
-  seed = time((time_t *) 0);
+  seed = (unsigned long) time((time_t *) 0);
   gsl_rng_set(rng, seed);
   printf("gsl: seed=%lu\n", seed);
   printf("NGTYPES: %d\n", NGTYPES);
