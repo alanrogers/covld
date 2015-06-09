@@ -241,7 +241,7 @@ void do_nothing(double x) {
  * Calculate r from two vectors of indicator variables.
  * On input, xdata[i] = 1 if the ith gamete carries A a locus 1.  It
  * equals 0 otherwise.  ydata[i] is defined similarly for allele B at
- * the 2nd locus. 
+ * the 2nd locus. This function is used only for debugging.
  */
 double get_r_gamete(int len, int *xdata, int *ydata) {
 
@@ -296,7 +296,7 @@ void print_genotype_table(FILE *f, int len, int *xdata, int *ydata) {
 }
 
 /*
- * Calculate r from two data vectors.
+ * Calculate r from two data vectors. This function is used only for debugging.
  */
 double get_r_corr(int len, int *xdata, int *ydata) {
     double vx, vy, vxvy, cov, r, nsqr;
